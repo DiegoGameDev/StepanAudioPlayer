@@ -65,7 +65,7 @@ public class SongListController
 
     public void LoadMusicFolder()
     {
-        string basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanAudioPlayer", "MusicFolderPaths.stpf");
+        string basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanAudioPlayer", "MusicFolderPaths.stpf");
 
         if (File.Exists(basePath))
         {
@@ -85,7 +85,7 @@ public class SongListController
 
     public void SetMusicFolder(string folder)
     {
-        string basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanAudioPlayer", "MusicFolderPaths.stpf");
+        string basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanAudioPlayer", "MusicFolderPaths.stpf");
 
         musicFolder?.folders.Add(folder);
 

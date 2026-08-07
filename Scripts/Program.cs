@@ -5,6 +5,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        AppLauncher.Launch();
         RenderLayout();
     }
 
@@ -212,6 +213,7 @@ public class Program
                 case ConsoleKey.Enter:
                 songListLayout.Confirm();
                 PlaylistLayout = false;
+                needsRender = true;
                 break;
 
                 case ConsoleKey.Backspace:
@@ -219,6 +221,7 @@ public class Program
                     if (timesBackspacePressed >= 2)
                     {
                         songListLayout.Delete();
+                        Render(songListLayout);
                         Console.Clear();
                     }
                 break;

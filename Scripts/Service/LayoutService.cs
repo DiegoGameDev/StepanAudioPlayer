@@ -13,7 +13,7 @@ public class LayoutService
 
     public string ReadLayout(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanPattern", name);
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPattern", name);
         if (!File.Exists(path))
         {
             File.WriteAllText(path, "Stepan Player");
@@ -25,7 +25,7 @@ public class LayoutService
 
     public void SaveLayout(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanPattern", name);
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPattern", name);
         File.WriteAllText(path, "Stepan Player");
     }
 }

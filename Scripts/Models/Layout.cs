@@ -63,7 +63,7 @@ public class Layout : IDisposable, ILayout
     private string PlayListCompiled()
     {
         // titulo e quebra de linha
-        StringBuilder stringBuilder = new StringBuilder(currentPlayList.SongListName).Append(Environment.NewLine).Append(Environment.NewLine);
+        StringBuilder stringBuilder = new StringBuilder($" {currentPlayList.SongListName}").Append(Environment.NewLine).Append(Environment.NewLine);
 
         var names = currentPlayList.SongNames();
         
