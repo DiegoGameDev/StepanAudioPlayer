@@ -1,6 +1,7 @@
 using NAudio.Wave;
 using NAudio;
 using Stepan.Models;
+using Newtonsoft.Json;
 
 namespace Stepan.Song;
 
@@ -11,6 +12,8 @@ public class Player : IDisposable
     private readonly AudioFileReader audio;
     private readonly WaveOutEvent outPutDevice;
     private bool isManualStop = false;
+
+    PlayerConfig playerConfig;
 
     public Player(string audioPath)
     {
@@ -24,6 +27,16 @@ public class Player : IDisposable
         outPutDevice.PlaybackStopped += FinishedMusic;
         outPutDevice.Init(audio);
         instance = this;
+
+        string roaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string path = Path.Combine(roaming, "Stepan", "StepanAudioPlayer", "config.stpc");
+
+        var json = File.ReadAllText(path);
+
+        playerConfig = JsonConvert.DeserializeObject<PlayerConfig>(json);
+        playerConfig.volume = Math.Clamp(playerConfig.volume, 0, 100);
+
+        outPutDevice.Volume = playerConfig.volume / 100;
     }
 
     public void Play()

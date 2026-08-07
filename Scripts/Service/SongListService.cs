@@ -13,7 +13,7 @@ public class SongListService
 
     public SongList GetPlayList(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanPlayLists", name);
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
         if (File.Exists(path))
         {
             var json = File.ReadAllText(path);
@@ -32,7 +32,7 @@ public class SongListService
     {
         if (songList == null) return default;
 
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanPlayLists", name);
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
 
         var json = JsonConvert.SerializeObject(songList, settings);
 
@@ -43,7 +43,7 @@ public class SongListService
 
     public void DeleteSongList(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanPlayLists", name);
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
 
         if (File.Exists(path))
         {
@@ -54,7 +54,7 @@ public class SongListService
     public IEnumerable<SongList> SongLists()
     {
         string extension = ".stpsl";
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StepanPlayLists");
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists");
         var files = Directory.GetFiles(path).Where(p => extension.Contains(Path.GetExtension(p)));
 
         List<SongList> songLists = new();
