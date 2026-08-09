@@ -15,12 +15,13 @@ public class Program
     static bool needsRender = true;
     internal static bool isPlaying = false;
 
-    static void DrawCall() => needsRender = true;
+    static void DrawCall(){Console.Clear(); Render(currentLayout);}
     static void CreatePlaylistDrawCall() => CreatePlaylist();
     static bool creatingPlaylist = false;
 
     static Layout defaultLayout;
     static SongListEdit editSonglistLayout;
+    static ILayout currentLayout;
 
     private static void RenderLayout()
     {
@@ -88,6 +89,7 @@ public class Program
             {
                 needsRender = false;
                 Console.Clear();
+                currentLayout = defaultLayout;
                 Render(defaultLayout);
             }
 
@@ -95,7 +97,7 @@ public class Program
         }
     }
 
-    static void Render(ILayout layout)
+    public static void Render(ILayout layout)
     {
         Console.WriteLine(layout.CompileLayout());
 
@@ -140,6 +142,7 @@ public class Program
         while(creatingPlaylist)
         {
             Console.Clear();
+            currentLayout = editSonglistLayout;
             Render(editSonglistLayout);
             switch(Console.ReadKey().Key)
                 {
@@ -206,6 +209,7 @@ public class Program
         while(PlaylistLayout)
         {
             Console.Clear();
+            currentLayout = songListLayout;
             Render(songListLayout);
 
             switch(Console.ReadKey().Key)
