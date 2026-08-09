@@ -25,9 +25,7 @@ public class Player : IDisposable
         using(outPutDevice = new WaveOutEvent());
 
         outPutDevice.PlaybackStopped += FinishedMusic;
-        outPutDevice.Init(audio);
-        instance = this;
-
+        
         string roaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         string path = Path.Combine(roaming, "Stepan", "StepanAudioPlayer", "config.stpc");
 
@@ -35,8 +33,12 @@ public class Player : IDisposable
 
         playerConfig = JsonConvert.DeserializeObject<PlayerConfig>(json);
         playerConfig.volume = Math.Clamp(playerConfig.volume, 0, 100);
+        audio.Volume = playerConfig.volume / 100;
 
-        outPutDevice.Volume = playerConfig.volume / 100;
+        outPutDevice.Init(audio);
+        instance = this;
+
+
     }
 
     public void Play()

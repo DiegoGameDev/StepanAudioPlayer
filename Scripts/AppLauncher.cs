@@ -116,12 +116,7 @@ StepanPlayer  -version 1.1  2026
         if (needsSetup)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(string.Concat("Ambiente criado ou corrigido.", line));
-        }
-        else
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Concat("Ambiente OK.", line));
+            Console.WriteLine(string.Concat("Enviroment fixed.", line));
         }
 
         Console.ResetColor();

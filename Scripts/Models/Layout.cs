@@ -15,6 +15,7 @@ public class Layout : IDisposable, ILayout
     private string currentPlayListCompiled = "";
     public int currentSongIndex {private set; get;} = 0;
     public string CurrentSongPlaying {get; private set;}
+    private int currentSongPlayingindex = 0;
 
     private readonly LayoutController _layoutController = new();
     private readonly SongListController _songListController = new();
@@ -46,7 +47,8 @@ public class Layout : IDisposable, ILayout
         _songListController.LoadMusicFolder();
         currentPlayList =  _songListController.LoadDefaultMusics();
         
-        player = new(currentPlayList.filePath[currentSongIndex]);
+        if (player == null)
+            player = new(currentPlayList.filePath[currentSongIndex]);
     }
 
     public string CompileLayout()
@@ -129,6 +131,8 @@ public class Layout : IDisposable, ILayout
         CurrentSongPlaying = Path.GetFileNameWithoutExtension(currentPlayList.filePath[currentSongIndex]);
         player = new Player(currentPlayList.filePath[currentSongIndex]);
         player.Play();
+        currentSongPlayingindex = currentSongIndex;
+        Program.CallRender.Invoke();;
     }
     public void Pause()
     {
