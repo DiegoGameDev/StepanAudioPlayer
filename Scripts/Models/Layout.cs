@@ -1,4 +1,6 @@
 using System.Dynamic;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using NAudio.Wave;
 using Stepan.Controller;
@@ -9,8 +11,12 @@ namespace Stepan.Models;
 //layout contem o header, footer e um objeto que armazena musicas
 public class Layout : IDisposable, ILayout
 {
+    private SongList songListBase = new();
     public SongList currentPlayList = new();
-    public ReproductionMode reproductionMode = ReproductionMode.Queue;
+
+    public ReproductionMode reproductionMode = ReproductionMode.NoRepeat;
+    int reproductionModeIndex = 0;
+    public ReproductionOrder reproductionOrder = ReproductionOrder.ByOrder;
 
     private string currentPlayListCompiled = "";
     public int currentSongIndex {private set; get;} = 0;
@@ -20,6 +26,7 @@ public class Layout : IDisposable, ILayout
     private readonly LayoutController _layoutController = new();
     private readonly SongListController _songListController = new();
 
+    public Player getPlayer => player;
     Player player;
     public PlayerState playerState = PlayerState.Playing;
     public enum PlayerState{Playing, Paused}
@@ -37,7 +44,10 @@ public class Layout : IDisposable, ILayout
     {
         SongList PlayList = _songListController.LoadSongList(name);
         if (PlayList != null)
-            currentPlayList = PlayList;
+        {
+            songListBase = new(PlayList);
+            currentPlayList = new(songListBase);
+        }
 
         currentSongIndex = 0;
     }
@@ -45,7 +55,8 @@ public class Layout : IDisposable, ILayout
     public void LoadPlayList(string name)
     {
         _songListController.LoadMusicFolder();
-        currentPlayList =  _songListController.LoadDefaultMusics();
+        songListBase =  _songListController.LoadDefaultMusics();
+        currentPlayList = new(songListBase);
         
         if (player == null)
             player = new(currentPlayList.filePath[currentSongIndex]);
@@ -104,24 +115,66 @@ public class Layout : IDisposable, ILayout
     {
         switch(reproductionMode)
         {
-            case ReproductionMode.Loop:
+            case ReproductionMode.RepeatTrack:
                 player.Stop();
                 player.Play();
             break;
-            case ReproductionMode.Repeat:
+            case ReproductionMode.RepeatPlaylist:
                 currentSongIndex++;
                 if (currentSongIndex > currentPlayList.SongNames().Count - 1)
                     currentSongIndex = 0;
                 Play();
             break;
-            case ReproductionMode.Queue:
+            case ReproductionMode.NoRepeat:
                 currentSongIndex++;
                 if (currentSongIndex > currentPlayList.SongNames().Count - 1)
                     currentSongIndex = 0;
-                Play();
+                player.Stop();
             break;
         }
     }
+
+    #region  Reproductions Behaviour
+    public void ChangeReproducionMode()
+    {
+        reproductionModeIndex++;
+        if (reproductionModeIndex >= 3)
+            reproductionModeIndex = 0;
+
+        reproductionMode = (ReproductionMode)reproductionModeIndex;
+    }
+
+    public void ChangeReproductionOrder()
+    {
+        switch (reproductionOrder)
+        {
+            case ReproductionOrder.ByOrder:
+                Randomizer();
+            break;
+            case ReproductionOrder.Random:
+                DefaultOrder();
+            break;
+        }
+    }
+
+    private void DefaultOrder()
+    {
+        currentPlayList = new(songListBase);
+        reproductionOrder = ReproductionOrder.ByOrder;
+        Program.CallRender.Invoke();
+    }
+
+    private void Randomizer()
+    {
+        SongList songListRandomized = new(songListBase);
+
+        Random.Shared.Shuffle<string>(CollectionsMarshal.AsSpan(songListRandomized.filePath));
+        currentPlayList = new(songListRandomized);
+
+        reproductionOrder = ReproductionOrder.Random;
+        Program.CallRender.Invoke();
+    }
+    #endregion
 
     public void Play()
     {
@@ -150,10 +203,15 @@ public class Layout : IDisposable, ILayout
 
         playerState = state;
     }
+    public void ChangeVolume(bool sum)
+    {
+        player.IncrementVolume(sum);
+    }
 
     public void Dispose()
     {
         player.Dispose();
     }
 }
-public enum ReproductionMode {Repeat, Loop, Queue}
+public enum ReproductionMode {RepeatPlaylist = 0, RepeatTrack = 1, NoRepeat = 2}
+public enum ReproductionOrder {ByOrder, Random}

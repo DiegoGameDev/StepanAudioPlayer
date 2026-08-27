@@ -13,6 +13,7 @@ public class Player : IDisposable
     private readonly WaveOutEvent outPutDevice;
     private bool isManualStop = false;
 
+    public float Volume => playerConfig.volume;
     PlayerConfig playerConfig;
 
     public Player(string audioPath)
@@ -26,7 +27,11 @@ public class Player : IDisposable
 
         outPutDevice.PlaybackStopped += FinishedMusic;
         
-        string roaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string roaming = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+        
+        #if DEBUG
+        roaming = Path.Combine(Directory.GetCurrentDirectory());
+            #endif
         string path = Path.Combine(roaming, "Stepan", "StepanAudioPlayer", "config.stpc");
 
         var json = File.ReadAllText(path);
@@ -37,8 +42,6 @@ public class Player : IDisposable
 
         outPutDevice.Init(audio);
         instance = this;
-
-
     }
 
     public void Play()
@@ -55,6 +58,23 @@ public class Player : IDisposable
     {
         isManualStop = true;
         outPutDevice.Stop();
+    }
+
+    public void IncrementVolume(bool increment)
+    {
+        float value = increment ? playerConfig.IncrementVolumeValue : playerConfig.IncrementVolumeValue * -1; 
+        playerConfig.volume = Math.Clamp(playerConfig.volume + value, 0, 100);
+        outPutDevice.Volume = playerConfig.volume / 100;
+
+        string roaming = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+        
+        #if DEBUG
+        roaming = Path.Combine(Directory.GetCurrentDirectory());
+            #endif
+        string path = Path.Combine(roaming, "Stepan", "StepanAudioPlayer", "config.stpc");
+
+        string json = JsonConvert.SerializeObject(playerConfig);
+        File.WriteAllText(path, json);
     }
 
     private void FinishedMusic(object? sender, StoppedEventArgs e)

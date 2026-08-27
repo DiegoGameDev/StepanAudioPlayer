@@ -10,5 +10,16 @@ namespace Stepan.Song
         {
             return filePath.Select(x => Path.GetFileName(x)).ToList();
         }
+        
+        public SongList()
+        {
+            
+        }
+
+        public SongList(SongList songList)
+        {
+            SongListName = songList.SongListName;
+            filePath = new List<string>(songList.filePath);
+        }
     }
 }
