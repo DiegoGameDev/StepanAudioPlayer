@@ -10,10 +10,15 @@ public class SongListService
         Formatting = Formatting.Indented,
         TypeNameHandling = TypeNameHandling.Auto
     };
-
+    string path;
     public SongList GetPlayList(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
+        
+        path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
+        #if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), "Stepan", "StepanPlayLists", name);
+            #endif
+
         if (File.Exists(path))
         {
             var json = File.ReadAllText(path);
@@ -32,7 +37,10 @@ public class SongListService
     {
         if (songList == null) return default;
 
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
+        path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
+        #if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), "Stepan", "StepanPlayLists", name);
+            #endif
 
         var json = JsonConvert.SerializeObject(songList, settings);
 
@@ -43,7 +51,10 @@ public class SongListService
 
     public void DeleteSongList(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
+        path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists", name);
+        #if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), "Stepan", "StepanPlayLists", name);
+            #endif
 
         if (File.Exists(path))
         {
@@ -54,7 +65,12 @@ public class SongListService
     public IEnumerable<SongList> SongLists()
     {
         string extension = ".stpsl";
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists");
+
+        path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPlayLists");
+        #if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), "Stepan", "StepanPlayLists");
+            #endif
+        
         var files = Directory.GetFiles(path).Where(p => extension.Contains(Path.GetExtension(p)));
 
         List<SongList> songLists = new();

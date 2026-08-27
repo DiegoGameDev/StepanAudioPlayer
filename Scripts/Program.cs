@@ -1,4 +1,4 @@
-﻿using Stepan.Controller;
+﻿using System.Text;
 using Stepan.Models;
 
 public class Program
@@ -78,7 +78,22 @@ public class Program
                     needsRender = true;
                     break;
 
+                    case ConsoleKey.O:
+                        defaultLayout.ChangeReproductionOrder();
+                        break;
+
+                    case ConsoleKey.R:
+                        defaultLayout.ChangeReproducionMode();
+                        break;
+
                     default:
+
+                    case ConsoleKey.Add:
+                        defaultLayout.ChangeVolume(true);
+                    break;
+                    case ConsoleKey.Subtract:
+                        defaultLayout.ChangeVolume(false);
+                    break;
                     
                     break;
                 }
@@ -115,6 +130,11 @@ public class Program
                 WriteColor(message, ConsoleColor.Red);
             }
         }
+        StringBuilder reproductionInfo = new StringBuilder().Append(Environment.NewLine).Append($"Volume: {defaultLayout.getPlayer.Volume}").Append(Environment.NewLine)
+                                                            .Append(Environment.NewLine).Append($"Reproduction Order: {defaultLayout.reproductionOrder.ToString()}")
+                                                            .Append(Environment.NewLine).Append($"Reproduction Mode: {defaultLayout.reproductionMode.ToString()}");
+
+        WriteColor(reproductionInfo.ToString(), ConsoleColor.Cyan);
 
     }
 

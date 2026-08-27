@@ -5,6 +5,7 @@ namespace Stepan.Service;
 
 public class LayoutService
 {
+    string path;
     private readonly JsonSerializerSettings settings = new()
     {
         Formatting = Formatting.Indented,
@@ -13,7 +14,12 @@ public class LayoutService
 
     public string ReadLayout(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPattern", name);
+
+        path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPattern", name);
+        #if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), "Stepan", "StepanPattern", name);
+            #endif
+
         if (!File.Exists(path))
         {
             File.WriteAllText(path, "Stepan Player");
@@ -25,7 +31,11 @@ public class LayoutService
 
     public void SaveLayout(string name)
     {
-        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPattern", name);
+        path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stepan", "StepanPattern", name);
+        #if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), "Stepan", "StepanPattern", name);
+            #endif
+            
         File.WriteAllText(path, "Stepan Player");
     }
 }
