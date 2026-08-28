@@ -61,7 +61,7 @@ StepanPlayer  -version 1.2  2026
 Commands:
 Select(ENTER) - Edit Playlist(E) - Remove( 2 * BACKSPACE)
 
-StepanPlayer  -version 1.2  2026
+StepanPlayer  -version 1.2.1  2026
 ";
 
         bool needsSetup = false;
