@@ -121,7 +121,7 @@ public class Program
         if (defaultLayout.Played){
             if (defaultLayout.playerState == Layout.PlayerState.Playing)
             {
-                message = string.Concat("Playing: ", defaultLayout.CurrentSongPlaying);
+                message = string.Concat("Playing: ", Path.GetFileNameWithoutExtension(defaultLayout.CurrentSongPlaying));
                 WriteColor(message, ConsoleColor.Green);
             }
             else

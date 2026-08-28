@@ -14,7 +14,7 @@ public class Layout : IDisposable, ILayout
     private SongList songListBase = new();
     public SongList currentPlayList = new();
 
-    public ReproductionMode reproductionMode = ReproductionMode.NoRepeat;
+    public ReproductionMode reproductionMode = ReproductionMode.RepeatPlaylist;
     int reproductionModeIndex = 0;
     public ReproductionOrder reproductionOrder = ReproductionOrder.ByOrder;
 
@@ -116,8 +116,7 @@ public class Layout : IDisposable, ILayout
         switch(reproductionMode)
         {
             case ReproductionMode.RepeatTrack:
-                player.Stop();
-                player.Play();
+                Play(CurrentSongPlaying);
             break;
             case ReproductionMode.RepeatPlaylist:
                 currentSongIndex++;
@@ -125,7 +124,7 @@ public class Layout : IDisposable, ILayout
                     currentSongIndex = 0;
                 Play();
             break;
-            case ReproductionMode.NoRepeat:
+            case ReproductionMode.NoRepeat: 
                 currentSongIndex++;
                 if (currentSongIndex > currentPlayList.SongNames().Count - 1)
                     currentSongIndex = 0;
@@ -133,12 +132,11 @@ public class Layout : IDisposable, ILayout
             break;
         }
     }
-
     #region  Reproductions Behaviour
     public void ChangeReproducionMode()
     {
         reproductionModeIndex++;
-        if (reproductionModeIndex >= 3)
+        if (reproductionModeIndex > 2)
             reproductionModeIndex = 0;
 
         reproductionMode = (ReproductionMode)reproductionModeIndex;
@@ -176,16 +174,27 @@ public class Layout : IDisposable, ILayout
     }
     #endregion
 
-    public void Play()
+    public void Play(string path = "")
     {
+        if (!string.IsNullOrEmpty(path))
+        {
+            Played = true;
+            playerState = PlayerState.Playing;
+            player.Stop();
+            CurrentSongPlaying = path;
+            player = new Player(CurrentSongPlaying);
+            player.Play();
+            Program.CallRender.Invoke();
+        }
+
         Played = true;
         playerState = PlayerState.Playing;
         player.Stop();
-        CurrentSongPlaying = Path.GetFileNameWithoutExtension(currentPlayList.filePath[currentSongIndex]);
+        CurrentSongPlaying = new(currentPlayList.filePath[currentSongIndex]);
         player = new Player(currentPlayList.filePath[currentSongIndex]);
         player.Play();
         currentSongPlayingindex = currentSongIndex;
-        Program.CallRender.Invoke();;
+        Program.CallRender.Invoke();
     }
     public void Pause()
     {
