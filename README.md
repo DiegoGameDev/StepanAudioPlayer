@@ -8,7 +8,7 @@ Um player de música em C# com sistema de playlists e interface baseada em padr�
 
 Se você só quer usar o Stepan Player, baixe aqui:
 
-👉 https://github.com/DiegoGameDev/StepanAudioPlayer/releases/tag/v1.1
+👉 https://github.com/DiegoGameDev/StepanAudioPlayer/releases/tag/1.2.1
 
 Não é necessário compilar o projeto.
 
