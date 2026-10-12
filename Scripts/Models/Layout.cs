@@ -1,8 +1,5 @@
-using System.Dynamic;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using NAudio.Wave;
 using Stepan.Controller;
 using Stepan.Song;
 
@@ -21,7 +18,7 @@ public class Layout : IDisposable, ILayout
     private string currentPlayListCompiled = "";
     public int currentSongIndex {private set; get;} = 0;
     public string CurrentSongPlaying {get; private set;}
-    private int currentSongPlayingindex = 0;
+    public int currentSongPlayingindex = 0;
 
     private readonly LayoutController _layoutController = new();
     private readonly SongListController _songListController = new();
@@ -111,6 +108,44 @@ public class Layout : IDisposable, ILayout
         currentSongIndex =  Math.Clamp(currentSongIndex, 0, currentPlayList.SongNames().Count - 1);
     }
 
+    public void advanceSongIndex(int nextSongIndex)
+    {
+        switch (nextSongIndex)
+        {
+            case 1:
+                currentSongPlayingindex++;
+                break;
+            case -1:
+                currentSongPlayingindex--;
+                break;
+        }
+
+        if (currentSongPlayingindex >= currentPlayList.SongNames().Count)
+        {
+            currentSongPlayingindex = 0;
+            if (reproductionMode != ReproductionMode.NoRepeat)
+            {
+                Program.CallRender.Invoke();
+                Play();
+                return;
+            }
+
+            Play();
+            Pause();
+            Program.CallRender.Invoke();
+            return;
+        }
+        else if (currentSongPlayingindex < 0)
+        {
+            currentSongPlayingindex = currentPlayList.SongNames().Count - 1;
+
+            Play();
+            return;
+        }
+
+        Play();
+    }
+
     public void OnMusicFinished()
     {
         switch(reproductionMode)
@@ -146,6 +181,7 @@ public class Layout : IDisposable, ILayout
             reproductionModeIndex = 0;
 
         reproductionMode = (ReproductionMode)reproductionModeIndex;
+        Program.CallRender.Invoke();
     }
 
     public void ChangeReproductionOrder()

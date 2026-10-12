@@ -77,6 +77,20 @@ public class Player : IDisposable
         File.WriteAllText(path, json);
     }
 
+    public void SetVolume(float volume)
+    {
+        playerConfig.volume = Math.Clamp(volume, 0, 100);
+        outPutDevice.Volume = playerConfig.volume / 100;
+        string roaming = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+
+        #if DEBUG
+                roaming = Path.Combine(Directory.GetCurrentDirectory());
+        #endif
+        string path = Path.Combine(roaming, "Stepan", "StepanAudioPlayer", "config.stpc");
+        string json = JsonConvert.SerializeObject(playerConfig);
+        File.WriteAllText(path, json);
+    }
+
     private void FinishedMusic(object? sender, StoppedEventArgs e)
     {
         if (e.Exception != null)

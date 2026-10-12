@@ -1,11 +1,18 @@
 ﻿using System.Text;
 using Stepan.Models;
+using StepanPlayer.Global;
 
 public class Program
 {
     public static void Main(string[] args)
     {
         AppLauncher.Launch();
+        Thread keysThread = new Thread(() =>
+        {
+            GlobalHotKey.LaunchKeysStepanPlayer();
+        });
+
+        keysThread.Start();
         RenderLayout();
     }
 
@@ -23,6 +30,29 @@ public class Program
     static SongListEdit editSonglist_layout;
     static ILayout currentLayout;
 
+    public static void GlobalHotKeyHandler(Virtual_Keys key)
+    {
+        float currentVolume = musicSelector_layout.getPlayer.Volume;
+        switch (key)
+        {
+            case Virtual_Keys.F7:
+                musicSelector_layout.getPlayer.SetVolume(currentVolume); //garante que as teclas de atalho não alterem o volume
+                musicSelector_layout.advanceSongIndex(-1);
+                needsRender = true;
+                break;
+            case Virtual_Keys.F8:
+                musicSelector_layout.getPlayer.SetVolume(currentVolume); //garante que as teclas de atalho não alterem o volume
+                musicSelector_layout.Pause();
+                needsRender = true;
+                break;
+            case Virtual_Keys.F9:
+                musicSelector_layout.getPlayer.SetVolume(currentVolume); //garante que as teclas de atalho não alterem o volume
+                musicSelector_layout.advanceSongIndex(1);
+                needsRender = true;
+                break;
+        }
+    }
+
     private static void RenderLayout()
     {
         musicSelector_layout = new ();
@@ -37,6 +67,12 @@ public class Program
 
         while(isPlaying)
         {
+            //process Queue
+            while (TasksQueue.Queue.TryDequeue(out Action action))
+            {
+                action();
+            }
+
             if (creatingPlaylist)
                 break;
                 
@@ -284,5 +320,6 @@ public class Program
     private static void END(object sender, EventArgs e)
     {
         musicSelector_layout.Dispose();
+        GlobalHotKey.UnregisterKeys();
     }
 }

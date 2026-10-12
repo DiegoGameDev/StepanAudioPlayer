@@ -32,11 +32,12 @@ public static class AppLauncher
 (Musicas)
 
 Comands:
-Pause/Resume (P) - Play (ENTER) - Selection(Up_ARROW, Down_ARROW) - Change Playlist(S) - Search Songs(F5)
+Pause/Resume (F8) - Play Next Song (F9) - Play Previous Song (F7)
+Play (ENTER) - Selection(Up_ARROW, Down_ARROW) - Change Playlist(S) - Search Songs(F5)
 Change Reproduction Order (O) - Change Reproduction Mode (R)
 +Volume (+) - -Volume (-)
 
-StepanPlayer  -version 1.2.1  2026
+StepanPlayer  -version 1.2.2  2026
 Diego Santana
 ";
 
@@ -49,7 +50,7 @@ Diego Santana
 Commands:
 Add Song(SPACE) - Set PlayList Name(S) - Confirm(ENTER)
 
-StepanPlayer  -version 1.2.1  2026
+StepanPlayer  -version 1.2.2  2026
 ";
 
         string playlistsScreenPath = Path.Combine(folderPattern, "SongListLayout.stp");
@@ -61,7 +62,7 @@ StepanPlayer  -version 1.2.1  2026
 Commands:
 Select(ENTER) - Edit Playlist(E) - Remove( 2 * BACKSPACE)
 
-StepanPlayer  -version 1.2.1  2026
+StepanPlayer  -version 1.2.2  2026
 ";
 
         bool needsSetup = false;
