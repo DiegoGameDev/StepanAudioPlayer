@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|c:\\users\\diegomoggingbytes\\documents\\github\\stp softwares\\stepanaudioplayer\\scripts\\applauncher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|solutionrelative:scripts\\applauncher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|c:\\users\\diegomoggingbytes\\documents\\github\\stp softwares\\stepanaudioplayer\\scripts\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|solutionrelative:scripts\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|c:\\users\\diegomoggingbytes\\documents\\github\\stp softwares\\stepanaudioplayer\\scripts\\stepanplayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|solutionrelative:scripts\\stepanplayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|c:\\users\\diegomoggingbytes\\documents\\github\\stp softwares\\stepanaudioplayer\\scripts\\models\\layout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{466A3F33-9E0C-9DB5-04C1-5E833D559892}|Scripts\\StepanPlayer.csproj|solutionrelative:scripts\\models\\layout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppLauncher.cs",
+              "DocumentMoniker": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\AppLauncher.cs",
+              "RelativeDocumentMoniker": "Scripts\\AppLauncher.cs",
+              "ToolTip": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\AppLauncher.cs",
+              "RelativeToolTip": "Scripts\\AppLauncher.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwCYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T14:31:07.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StepanPlayer",
+              "DocumentMoniker": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\StepanPlayer.csproj",
+              "RelativeDocumentMoniker": "Scripts\\StepanPlayer.csproj",
+              "ToolTip": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\StepanPlayer.csproj",
+              "RelativeToolTip": "Scripts\\StepanPlayer.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-12T14:28:41.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\Program.cs",
+              "RelativeDocumentMoniker": "Scripts\\Program.cs",
+              "ToolTip": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\Program.cs",
+              "RelativeToolTip": "Scripts\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T14:18:49.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Layout.cs",
+              "DocumentMoniker": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\Models\\Layout.cs",
+              "RelativeDocumentMoniker": "Scripts\\Models\\Layout.cs",
+              "ToolTip": "C:\\Users\\DiegoMoggingBytes\\Documents\\GitHub\\STP Softwares\\StepanAudioPlayer\\Scripts\\Models\\Layout.cs",
+              "RelativeToolTip": "Scripts\\Models\\Layout.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAADgv4gAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T14:14:09.455Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

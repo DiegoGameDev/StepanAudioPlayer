@@ -36,7 +36,7 @@ Pause/Resume (P) - Play (ENTER) - Selection(Up_ARROW, Down_ARROW) - Change Playl
 Change Reproduction Order (O) - Change Reproduction Mode (R)
 +Volume (+) - -Volume (-)
 
-StepanPlayer  -version 1.2  2026
+StepanPlayer  -version 1.2.1  2026
 Diego Santana
 ";
 
@@ -49,7 +49,7 @@ Diego Santana
 Commands:
 Add Song(SPACE) - Set PlayList Name(S) - Confirm(ENTER)
 
-StepanPlayer  -version 1.2  2026
+StepanPlayer  -version 1.2.1  2026
 ";
 
         string playlistsScreenPath = Path.Combine(folderPattern, "SongListLayout.stp");

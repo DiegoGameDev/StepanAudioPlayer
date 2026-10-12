@@ -19,15 +19,15 @@ public class Program
     static void CreatePlaylistDrawCall() => CreatePlaylist();
     static bool creatingPlaylist = false;
 
-    static Layout defaultLayout;
-    static SongListEdit editSonglistLayout;
+    static Layout musicSelector_layout;
+    static SongListEdit editSonglist_layout;
     static ILayout currentLayout;
 
     private static void RenderLayout()
     {
-        defaultLayout = new ();
-        defaultLayout.SetLayout();
-        defaultLayout.LoadPlayList("default.stpsl");
+        musicSelector_layout = new ();
+        musicSelector_layout.SetLayout();
+        musicSelector_layout.LoadPlayList("default.stpsl");
 
         isPlaying = true;
 
@@ -45,25 +45,25 @@ public class Program
                 switch(Console.ReadKey().Key)
                 {
                     case ConsoleKey.Enter:
-                    defaultLayout.Play();
+                    musicSelector_layout.PlayedByKeyboard();
                     Console.Clear();
                     needsRender = true;
                     break;
 
                     case ConsoleKey.UpArrow:
-                    defaultLayout.Selector(-1);
+                    musicSelector_layout.Selector(-1);
                     Console.Clear();
                     needsRender = true;
                     break;
 
                     case ConsoleKey.DownArrow:
-                    defaultLayout.Selector(1);
+                    musicSelector_layout.Selector(1);
                     Console.Clear();
                     needsRender = true;
                     break;
 
                     case ConsoleKey.P:
-                    defaultLayout.Pause();
+                    musicSelector_layout.Pause();
                     Console.Clear();
                     needsRender = true;
                     break;
@@ -73,26 +73,26 @@ public class Program
                     break;
 
                     case ConsoleKey.F5:
-                        defaultLayout.LoadPlayList("default.stpsl");
+                        musicSelector_layout.LoadPlayList("default.stpsl");
                         Console.Clear();
                     needsRender = true;
                     break;
 
                     case ConsoleKey.O:
-                        defaultLayout.ChangeReproductionOrder();
+                        musicSelector_layout.ChangeReproductionOrder();
                         break;
 
                     case ConsoleKey.R:
-                        defaultLayout.ChangeReproducionMode();
+                        musicSelector_layout.ChangeReproducionMode();
                         break;
 
                     default:
 
                     case ConsoleKey.Add:
-                        defaultLayout.ChangeVolume(true);
+                        musicSelector_layout.ChangeVolume(true);
                     break;
                     case ConsoleKey.Subtract:
-                        defaultLayout.ChangeVolume(false);
+                        musicSelector_layout.ChangeVolume(false);
                     break;
                     
                     break;
@@ -104,8 +104,8 @@ public class Program
             {
                 needsRender = false;
                 Console.Clear();
-                currentLayout = defaultLayout;
-                Render(defaultLayout);
+                currentLayout = musicSelector_layout;
+                Render(musicSelector_layout);
             }
 
             Thread.Sleep(16);
@@ -118,21 +118,21 @@ public class Program
 
         string message;
 
-        if (defaultLayout.Played){
-            if (defaultLayout.playerState == Layout.PlayerState.Playing)
+        if (musicSelector_layout.Played){
+            if (musicSelector_layout.playerState == Layout.PlayerState.Playing)
             {
-                message = string.Concat("Playing: ", Path.GetFileNameWithoutExtension(defaultLayout.CurrentSongPlaying));
+                message = string.Concat("Playing: ", Path.GetFileNameWithoutExtension(musicSelector_layout.CurrentSongPlaying));
                 WriteColor(message, ConsoleColor.Green);
             }
             else
             {
-                message = string.Concat("Playing: ", defaultLayout.CurrentSongPlaying, " - Paused");
+                message = string.Concat("Playing: ", Path.GetFileNameWithoutExtension(musicSelector_layout.CurrentSongPlaying), " - Paused");
                 WriteColor(message, ConsoleColor.Red);
             }
         }
-        StringBuilder reproductionInfo = new StringBuilder().Append(Environment.NewLine).Append($"Volume: {defaultLayout.getPlayer.Volume}").Append(Environment.NewLine)
-                                                            .Append(Environment.NewLine).Append($"Reproduction Order: {defaultLayout.reproductionOrder.ToString()}")
-                                                            .Append(Environment.NewLine).Append($"Reproduction Mode: {defaultLayout.reproductionMode.ToString()}");
+        StringBuilder reproductionInfo = new StringBuilder().Append(Environment.NewLine).Append($"Volume: {musicSelector_layout.getPlayer.Volume}").Append(Environment.NewLine)
+                                                            .Append(Environment.NewLine).Append($"Reproduction Order: {musicSelector_layout.reproductionOrder.ToString()}")
+                                                            .Append(Environment.NewLine).Append($"Reproduction Mode: {musicSelector_layout.reproductionMode.ToString()}");
 
         WriteColor(reproductionInfo.ToString(), ConsoleColor.Cyan);
 
@@ -151,10 +151,10 @@ public class Program
     static void CreatePlaylist()
     {
         
-        if (editSonglistLayout == null)
+        if (editSonglist_layout == null)
         {
-            editSonglistLayout = new();
-            editSonglistLayout.Init();
+            editSonglist_layout = new();
+            editSonglist_layout.Init();
         }
 
         creatingPlaylist = true;
@@ -162,12 +162,12 @@ public class Program
         while(creatingPlaylist)
         {
             Console.Clear();
-            currentLayout = editSonglistLayout;
-            Render(editSonglistLayout);
+            currentLayout = editSonglist_layout;
+            Render(editSonglist_layout);
             switch(Console.ReadKey().Key)
                 {
                     case ConsoleKey.Enter:
-                    editSonglistLayout.Confirm();
+                    editSonglist_layout.Confirm();
                     //finish the playlist creation and render the defaultLayout
                     creatingPlaylist = false;
                     needsRender = true;
@@ -181,22 +181,22 @@ public class Program
                     break;
 
                     case ConsoleKey.Spacebar:
-                    editSonglistLayout.Add();
+                    editSonglist_layout.Add();
                     Console.Clear();
                     break;
 
                     case ConsoleKey.UpArrow:
-                    editSonglistLayout.Selector(-1);
+                    editSonglist_layout.Selector(-1);
                     Console.Clear();
                     break;
 
                     case ConsoleKey.DownArrow:
-                    editSonglistLayout.Selector(1);
+                    editSonglist_layout.Selector(1);
                     Console.Clear();
                     break;
 
                     case ConsoleKey.P:
-                    defaultLayout.Pause();
+                    musicSelector_layout.Pause();
                     Console.Clear();
                     break;
 
@@ -204,7 +204,7 @@ public class Program
                         Console.Clear();
                         Console.WriteLine("Playlist Name");
                         string playlistname = Console.ReadLine();
-                        editSonglistLayout.SetName(playlistname);
+                        editSonglist_layout.SetName(playlistname);
                         Console.Clear();
                     break;
 
@@ -213,7 +213,7 @@ public class Program
                     break;
                 }
         }
-        editSonglistLayout = null;
+        editSonglist_layout = null;
     }
 
     private static void SongListsLayout()
@@ -251,8 +251,8 @@ public class Program
                 break;
 
                 case ConsoleKey.E:
-                    editSonglistLayout = new();
-                    editSonglistLayout.Init(songListLayout.SonglistForEdit);
+                    editSonglist_layout = new();
+                    editSonglist_layout.Init(songListLayout.SonglistForEdit);
                     CreatePlaylistRender.Invoke();
                     Console.Clear();
                 break;
@@ -283,6 +283,6 @@ public class Program
 
     private static void END(object sender, EventArgs e)
     {
-        defaultLayout.Dispose();
+        musicSelector_layout.Dispose();
     }
 }

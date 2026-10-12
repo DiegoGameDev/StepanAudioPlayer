@@ -116,19 +116,25 @@ public class Layout : IDisposable, ILayout
         switch(reproductionMode)
         {
             case ReproductionMode.RepeatTrack:
-                Play(CurrentSongPlaying);
-            break;
-            case ReproductionMode.RepeatPlaylist:
-                currentSongIndex++;
-                if (currentSongIndex > currentPlayList.SongNames().Count - 1)
-                    currentSongIndex = 0;
                 Play();
             break;
-            case ReproductionMode.NoRepeat: 
-                currentSongIndex++;
-                if (currentSongIndex > currentPlayList.SongNames().Count - 1)
-                    currentSongIndex = 0;
-                player.Stop();
+            case ReproductionMode.RepeatPlaylist:
+                currentSongPlayingindex++;
+                if (currentSongPlayingindex > currentPlayList.SongNames().Count - 1)
+                    currentSongPlayingindex = 0;
+
+                Play();
+            break;
+            case ReproductionMode.NoRepeat:
+                currentSongPlayingindex++;
+                if (currentSongPlayingindex > currentPlayList.SongNames().Count - 1)
+                {
+                    currentSongPlayingindex = 0;
+                    player.Stop();
+                    Program.CallRender.Invoke();
+                    return;
+                }
+                player.Play();
             break;
         }
     }
@@ -174,19 +180,8 @@ public class Layout : IDisposable, ILayout
     }
     #endregion
 
-    public void Play(string path = "")
+    public void PlayedByKeyboard()
     {
-        if (!string.IsNullOrEmpty(path))
-        {
-            Played = true;
-            playerState = PlayerState.Playing;
-            player.Stop();
-            CurrentSongPlaying = path;
-            player = new Player(CurrentSongPlaying);
-            player.Play();
-            Program.CallRender.Invoke();
-        }
-
         Played = true;
         playerState = PlayerState.Playing;
         player.Stop();
@@ -194,6 +189,18 @@ public class Layout : IDisposable, ILayout
         player = new Player(currentPlayList.filePath[currentSongIndex]);
         player.Play();
         currentSongPlayingindex = currentSongIndex;
+        Program.CallRender.Invoke();
+    }
+
+    public void Play()
+    {
+        Played = true;
+        playerState = PlayerState.Playing;
+        player.Stop();
+        CurrentSongPlaying = new(currentPlayList.filePath[currentSongPlayingindex]);
+        player = new Player(currentPlayList.filePath[currentSongPlayingindex]);
+        player.Play();
+        currentSongIndex = currentSongPlayingindex;
         Program.CallRender.Invoke();
     }
     public void Pause()
